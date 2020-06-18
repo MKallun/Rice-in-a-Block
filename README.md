@@ -4,8 +4,8 @@ please install python 3.8
 
 open cmd, install libraries using this command
 
-pip install -U pip
-pip install dash
+* pip install -U pip
+* pip install dash
 pip install dash-renderer
 pip install dash-html-components
 pip install dash-core-components
