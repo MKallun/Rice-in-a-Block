@@ -6,15 +6,15 @@ open cmd, install libraries using this command
 
 * pip install -U pip
 * pip install dash
-pip install dash-renderer
-pip install dash-html-components
-pip install dash-core-components
-pip install dash-bootstrap-components
-pip install plotly
-pip install web3
-pip install pandas
-pip install dash-enterprise-auth
-pip install dash-auth==1.3.2
+* pip install dash-renderer
+* pip install dash-html-components
+* pip install dash-core-components
+* pip install dash-bootstrap-components
+* pip install plotly
+* pip install web3
+* pip install pandas
+* pip install dash-enterprise-auth
+* pip install dash-auth==1.3.2
 
 for admin.py
 username : admin
