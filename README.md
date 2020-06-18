@@ -1,5 +1,7 @@
 # Rice-in-a-Block
 
+watch the trailer https://youtu.be/3S-k2hOhlcQ
+
 please install python 3.8
 
 open cmd, install libraries using this command
