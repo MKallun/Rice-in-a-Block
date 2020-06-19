@@ -28,6 +28,9 @@ issues :
 3. username and password is not yet linked to blockchain
 
 features to be added soon :
-1. pricing
-2. differentiation between initial weight, deducted weight and final weight
-3. graph by date
+1. graph by date
+2. auto update
+
+features added:
+1. (06/20/2020) pricing
+2. (06/20/2020) differentiation between initial weight, deducted weight and final weight
