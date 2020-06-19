@@ -101,9 +101,14 @@ for i in range (1, int(limit)):
 # creates a dataframe for the bar graph
 #========================================================
 
-ohl = int(dfall.loc[dfall['Area'] == 'old hermitland', 'Weight'].sum())
-nhl = int(dfall.loc[dfall['Area'] == 'new hermitland', 'Weight'].sum())
-sd = int(dfall.loc[dfall['Area'] == 'shopping district', 'Weight'].sum())
+try:
+    ohl = int(dfall.loc[dfall['Area'] == 'old hermitland', 'Weight'].sum()) 
+    nhl = int(dfall.loc[dfall['Area'] == 'new hermitland', 'Weight'].sum()) 
+    sd = int(dfall.loc[dfall['Area'] == 'shopping district', 'Weight'].sum()) 
+except:
+    ohl = 0
+    nhl = 0
+    sd = 0
 
 Location = {
     'Location' : ['old hermitland', 'new hermitland', 'shopping district',],
