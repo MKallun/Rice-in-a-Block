@@ -1,4 +1,4 @@
-<marquee> # Rice-in-a-Block </marquee>
+#Rice-in-a-Block
 
 watch the trailer https://youtu.be/3S-k2hOhlcQ
 
