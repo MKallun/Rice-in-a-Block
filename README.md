@@ -1,4 +1,4 @@
-# Rice-in-a-Block
+<marquee> # Rice-in-a-Block </marquee>
 
 watch the trailer https://youtu.be/3S-k2hOhlcQ
 
@@ -23,14 +23,13 @@ username : admin
 password : 1234
 
 issues :
-1. auto update is not a thing yet so if you add data in using admin.py you need to save it first before it shouws up, during this process, the browser will output several error message implying it cant retrieve any data, during this time its highly suggested to just wait 5-10 sec
-2. date graph is not a thing yet, but should be updated soon
-3. username and password is not yet linked to blockchain
+1. username and password is not yet linked to blockchain
 
 features to be added soon :
-1. graph by date
-2. auto update
+1. line chart in graph by date to depict the weight per month per area 
 
 features added:
 1. (06/20/2020) pricing
 2. (06/20/2020) differentiation between initial weight, deducted weight and final weight
+3. (06/22/2020) auto update
+4. (06/22/2020) graph by date
