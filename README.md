@@ -17,6 +17,7 @@ open cmd, install libraries using this command
 * pip install pandas
 * pip install dash-enterprise-auth
 * pip install dash-auth==1.3.2
+* pip install bs4
 
 for admin.py
 username : admin
@@ -26,10 +27,12 @@ issues :
 1. username and password is not yet linked to blockchain
 
 features to be added soon :
-1. line chart in graph by date to depict the weight per month per area 
+
 
 features added:
 1. (06/20/2020) pricing
 2. (06/20/2020) differentiation between initial weight, deducted weight and final weight
 3. (06/22/2020) auto update
 4. (06/22/2020) graph by date
+5. (07/10/2020) news section, auto update
+
