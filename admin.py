@@ -11,6 +11,7 @@ import plotly.express as px
 import datetime
 import dash_auth
 import bs4
+from flask import request
 from requests import get
 from bs4 import BeautifulSoup
 from random import randint # for random integer value
@@ -21,7 +22,8 @@ from dash.exceptions import PreventUpdate
 
 #========================================================
 VALID_USERNAME_PASSWORD_PAIRS = {
-    'admin': '1234'
+    'admin': '1234',
+    'test' : 'test'
 }
 # Stylish stuff here
 #========================================================
@@ -37,7 +39,7 @@ auth = dash_auth.BasicAuth(
     VALID_USERNAME_PASSWORD_PAIRS
 )
 
-RB_LOGO = "https://raw.githubusercontent.com/MKallun/Rice-in-a-Block/master/107892469_1152198538493226_6402878337034372018_n.png"
+RB_LOGO = "https://raw.githubusercontent.com/MKallun/Rice-in-a-Block/master/108155783_584586912419739_2665953725697700139_n%20(2).png"
 
 # Blockchain stuff here
 #========================================================
@@ -48,10 +50,10 @@ web3 = Web3(Web3.HTTPProvider(ganache_url))
 web3.eth.defaultAccount = web3.eth.accounts[0]
 
 
-abi = json.loads('[{"inputs":[{"internalType":"string","name":"_UserName","type":"string"}],"name":"Login","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"_UserName","type":"string"},{"internalType":"string","name":"_Password","type":"string"}],"name":"Register","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"_Manufacturer","type":"string"},{"internalType":"string","name":"_Brand","type":"string"},{"internalType":"string","name":"_Area","type":"string"},{"internalType":"string","name":"_Status","type":"string"},{"internalType":"string","name":"_StatusRecieved","type":"string"},{"internalType":"uint256","name":"_StatusWeight","type":"uint256"},{"internalType":"uint256","name":"_Date","type":"uint256"},{"internalType":"uint256","name":"_Year","type":"uint256"},{"internalType":"uint256","name":"_Month","type":"uint256"},{"internalType":"uint256","name":"_Day","type":"uint256"},{"internalType":"uint256","name":"_Weight","type":"uint256"},{"internalType":"uint256","name":"_Price","type":"uint256"}],"name":"enterRiceInfo","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_StoreId","type":"uint256"}],"name":"getArea","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_StoreId","type":"uint256"}],"name":"getBrand","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_StoreId","type":"uint256"}],"name":"getDate","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_StoreId","type":"uint256"}],"name":"getDay","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_StoreId","type":"uint256"}],"name":"getManu","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_StoreId","type":"uint256"}],"name":"getMonth","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_StoreId","type":"uint256"}],"name":"getPrice","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_StoreId","type":"uint256"}],"name":"getStatus","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_StoreId","type":"uint256"}],"name":"getStatusRecieved","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_StoreId","type":"uint256"}],"name":"getStatusWeight","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getTransID","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_StoreId","type":"uint256"}],"name":"getWeight","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_StoreId","type":"uint256"}],"name":"getYear","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"newcount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"transactionCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}]')
+abi = json.loads('[{"inputs":[{"internalType":"string","name":"_UserName","type":"string"}],"name":"Login","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"_UserName","type":"string"},{"internalType":"string","name":"_Password","type":"string"}],"name":"Register","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"_User","type":"string"},{"internalType":"string","name":"_Manufacturer","type":"string"},{"internalType":"string","name":"_Brand","type":"string"},{"internalType":"string","name":"_Area","type":"string"},{"internalType":"string","name":"_Status","type":"string"},{"internalType":"string","name":"_StatusRecieved","type":"string"},{"internalType":"uint256","name":"_StatusWeight","type":"uint256"},{"internalType":"uint256","name":"_Date","type":"uint256"},{"internalType":"uint256","name":"_Year","type":"uint256"},{"internalType":"uint256","name":"_Month","type":"uint256"},{"internalType":"uint256","name":"_Day","type":"uint256"},{"internalType":"uint256","name":"_Weight","type":"uint256"},{"internalType":"uint256","name":"_Price","type":"uint256"}],"name":"enterRiceInfo","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_StoreId","type":"uint256"}],"name":"getArea","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_StoreId","type":"uint256"}],"name":"getBrand","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_StoreId","type":"uint256"}],"name":"getDate","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_StoreId","type":"uint256"}],"name":"getDay","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_StoreId","type":"uint256"}],"name":"getManu","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_StoreId","type":"uint256"}],"name":"getMonth","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_StoreId","type":"uint256"}],"name":"getPrice","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_StoreId","type":"uint256"}],"name":"getStatus","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_StoreId","type":"uint256"}],"name":"getStatusRecieved","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_StoreId","type":"uint256"}],"name":"getStatusWeight","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getTransID","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_StoreId","type":"uint256"}],"name":"getUser","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_StoreId","type":"uint256"}],"name":"getWeight","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_StoreId","type":"uint256"}],"name":"getYear","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"newcount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"transactionCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}]')
 
 # needs to be changed to match address in remix solidity
-address = web3.toChecksumAddress("0xA497336199449F9972E1C991aCD38Bae97b2131f")
+address = web3.toChecksumAddress("0xF5Aeb9F211522A8eeAD06A1c105DeceCbB8339a2")
 
 contract = web3.eth.contract(address=address, abi=abi)
 
@@ -154,102 +156,137 @@ Table1 = html.Div(
 # this gets selected value from URL, in this case URL being rappler 
 # and getting values for headlin, date of publish, preview and link
 # then adds it to a dataframe 
-url = 'https://www.rappler.com/previous-articles?filterCategory=&filterMeta=rice&filterTitle=&daterange=2020%2F06%2F25+-+2020%2F07%2F02&filterDateFrom=&filterDateTo=&option=com_dmarticlesfilter&view=articles&Itemid=1404&userSearch=1'
-response = get(url)
+try:
+    url = 'https://www.rappler.com/previous-articles?filterCategory=&filterMeta=rice&filterTitle=&daterange=2020%2F06%2F25+-+2020%2F07%2F02&filterDateFrom=&filterDateTo=&option=com_dmarticlesfilter&view=articles&Itemid=1404&userSearch=1'
+    response = get(url)
 
-html_soup = BeautifulSoup(response.text, 'html.parser')
-type(html_soup)
-bs4.BeautifulSoup
-movie_containers = html_soup.find_all('div', class_ = 'rappler-light-gray bg box-shadow-1 wrapper padding all')
-        
+    html_soup = BeautifulSoup(response.text, 'html.parser')
+    type(html_soup)
+    bs4.BeautifulSoup
+    movie_containers = html_soup.find_all('div', class_ = 'rappler-light-gray bg box-shadow-1 wrapper padding all')
+            
 
-headlines = []
-dates = []
-previews = []
-links = []
+    headlines = []
+    dates = []
+    previews = []
+    links = []
 
-for container in movie_containers:
+    for container in movie_containers:
 
-    headline = container.h3.a.text
-    headlines.append(headline)
+        headline = container.h3.a.text
+        headlines.append(headline)
 
-    date = container.div.find('span', class_ = 'details').text
-    dates.append(date)
+        date1 = str(container.div.find('span', class_ = 'details').text)
+        sep = '-'
+        date = date1.split(sep, 1)[0]
+        dates.append(date)
 
-    preview = container.p.text
-    previews.append(preview)
+        preview = container.p.text
+        previews.append(preview)
 
-    link = container.find('a')['href']
-    links.append(link)
-
-#================================================================
-# creates 2 dataframe
-# this is dataframe containing all headline and links 
-headline_df = pd.DataFrame({
-        'headline': headlines,
-        'link': links
-        })
-# this adds https://www.rappler.com/ before every link 
-headline_df['link'] = 'https://www.rappler.com/' + headline_df['link'].astype(str)  
-
-# this is dataframe containing all dates and previews
-info_df = pd.DataFrame({
-        'date': dates,
-        'preview': previews,
-})
+        link = container.find('a')['href']
+        links.append(link)
 
 
-table_header = [
-    html.Thead(html.Tr([html.Th("Headline",colSpan=1), html.Th("Date",colSpan=3)]))
-]
+    #================================================================
+    # creates 2 dataframe
+    # this is dataframe containing all headline and links 
+    headline_df = pd.DataFrame({
+            'headline': headlines,
+            'link': links
+            })
+    # this adds https://www.rappler.com/ before every link 
+    headline_df['link'] = 'https://www.rappler.com/' + headline_df['link'].astype(str)  
 
-row1 = html.Tr([html.Td(html.H4(html.B(html.A(headline_df.iloc[0]['headline'],href=headline_df.iloc[0]['link'])))), html.Td(info_df.iloc[0]['date'])])
-row2 = html.Tr([html.Td(info_df.iloc[0]['preview']), html.Td(" ")])
+    # this is dataframe containing all dates and previews
+    info_df = pd.DataFrame({
+            'date': dates,
+            'preview': previews,
+    })
 
-row3 = html.Tr([html.Td(html.H4(html.B(html.A(headline_df.iloc[1]['headline'],href=headline_df.iloc[1]['link'])))), html.Td(info_df.iloc[1]['date'])])
-row4 = html.Tr([html.Td(info_df.iloc[1]['preview']), html.Td(" ")])
 
-row5 = html.Tr([html.Td(html.H4(html.B(html.A(headline_df.iloc[2]['headline'],href=headline_df.iloc[2]['link'])))), html.Td(info_df.iloc[2]['date'])])
-row6 = html.Tr([html.Td(info_df.iloc[2]['preview']), html.Td(" ")])
+    # this calls the table function and passes headline_df to add hyperlink to headline
 
-row7 = html.Tr([html.Td(html.H4(html.B(html.A(headline_df.iloc[3]['headline'],href=headline_df.iloc[3]['link'])))), html.Td(info_df.iloc[3]['date'])])
-row8 = html.Tr([html.Td(info_df.iloc[3]['preview']), html.Td(" ")])
+    table_header = [
+        html.Thead(html.Tr([html.Th("Headline",colSpan=1), html.Th("Date",colSpan=3)]))
+    ]
 
-row9 = html.Tr([html.Td(html.H4(html.B(html.A(headline_df.iloc[4]['headline'],href=headline_df.iloc[4]['link'])))), html.Td(info_df.iloc[4]['date'])])
-row10 = html.Tr([html.Td(info_df.iloc[4]['preview']), html.Td(" ")])
+    row1 = html.Tr([html.Td(html.H4(html.B(html.A(headline_df.iloc[0]['headline'],href=headline_df.iloc[0]['link'])))), html.Td(info_df.iloc[0]['date'])])
+    row2 = html.Tr([html.Td(info_df.iloc[0]['preview']), html.Td(" ")])
 
-row11 = html.Tr([html.Td(html.H4(html.B(html.A(headline_df.iloc[5]['headline'],href=headline_df.iloc[5]['link'])))), html.Td(info_df.iloc[5]['date'])])
-row12 = html.Tr([html.Td(info_df.iloc[5]['preview']), html.Td(" ")])
+    row3 = html.Tr([html.Td(html.H4(html.B(html.A(headline_df.iloc[1]['headline'],href=headline_df.iloc[1]['link'])))), html.Td(info_df.iloc[1]['date'])])
+    row4 = html.Tr([html.Td(info_df.iloc[1]['preview']), html.Td(" ")])
 
-row13 = html.Tr([html.Td(html.H4(html.B(html.A(headline_df.iloc[6]['headline'],href=headline_df.iloc[6]['link'])))), html.Td(info_df.iloc[6]['date'])])
-row14 = html.Tr([html.Td(info_df.iloc[6]['preview']), html.Td(" ")])
+    row5 = html.Tr([html.Td(html.H4(html.B(html.A(headline_df.iloc[2]['headline'],href=headline_df.iloc[2]['link'])))), html.Td(info_df.iloc[2]['date'])])
+    row6 = html.Tr([html.Td(info_df.iloc[2]['preview']), html.Td(" ")])
 
-row15 = html.Tr([html.Td(html.H4(html.B(html.A(headline_df.iloc[7]['headline'],href=headline_df.iloc[7]['link'])))), html.Td(info_df.iloc[7]['date'])])
-row16 = html.Tr([html.Td(info_df.iloc[7]['preview']), html.Td(" ")])
+    row7 = html.Tr([html.Td(html.H4(html.B(html.A(headline_df.iloc[3]['headline'],href=headline_df.iloc[3]['link'])))), html.Td(info_df.iloc[3]['date'])])
+    row8 = html.Tr([html.Td(info_df.iloc[3]['preview']), html.Td(" ")])
 
-row17 = html.Tr([html.Td(html.H4(html.B(html.A(headline_df.iloc[8]['headline'],href=headline_df.iloc[8]['link'])))), html.Td(info_df.iloc[8]['date'])])
-row18 = html.Tr([html.Td(info_df.iloc[8]['preview']), html.Td(" ")])
+    row9 = html.Tr([html.Td(html.H4(html.B(html.A(headline_df.iloc[4]['headline'],href=headline_df.iloc[4]['link'])))), html.Td(info_df.iloc[4]['date'])])
+    row10 = html.Tr([html.Td(info_df.iloc[4]['preview']), html.Td(" ")])
 
-row19 = html.Tr([html.Td(html.H4(html.B(html.A(headline_df.iloc[9]['headline'],href=headline_df.iloc[9]['link'])))), html.Td(info_df.iloc[9]['date'])])
-row20 = html.Tr([html.Td(info_df.iloc[9]['preview']), html.Td(" ")])
+    row11 = html.Tr([html.Td(html.H4(html.B(html.A(headline_df.iloc[5]['headline'],href=headline_df.iloc[5]['link'])))), html.Td(info_df.iloc[5]['date'])])
+    row12 = html.Tr([html.Td(info_df.iloc[5]['preview']), html.Td(" ")])
 
-spacer = html.Tr([html.Td(" "), html.Td(" ")])
+    row13 = html.Tr([html.Td(html.H4(html.B(html.A(headline_df.iloc[6]['headline'],href=headline_df.iloc[6]['link'])))), html.Td(info_df.iloc[6]['date'])])
+    row14 = html.Tr([html.Td(info_df.iloc[6]['preview']), html.Td(" ")])
 
-table_body = [html.Tbody([row1, row2, spacer, row3, row4, spacer, row5, row6, spacer, row7, row8, spacer, row9, row10, spacer, row11, row12, spacer, row13, row14, spacer, row15, row16, spacer, row17, row18, spacer, row19, row20])]
+    row15 = html.Tr([html.Td(html.H4(html.B(html.A(headline_df.iloc[7]['headline'],href=headline_df.iloc[7]['link'])))), html.Td(info_df.iloc[7]['date'])])
+    row16 = html.Tr([html.Td(info_df.iloc[7]['preview']), html.Td(" ")])
 
-table3 = dbc.Table(table_header + table_body, borderless=True)
-Table2 = html.Div(
-    [
-        dbc.Row(dbc.Col(html.Div(" "))),
-        dbc.Row(
+    row17 = html.Tr([html.Td(html.H4(html.B(html.A(headline_df.iloc[8]['headline'],href=headline_df.iloc[8]['link'])))), html.Td(info_df.iloc[8]['date'])])
+    row18 = html.Tr([html.Td(info_df.iloc[8]['preview']), html.Td(" ")])
+
+    row19 = html.Tr([html.Td(html.H4(html.B(html.A(headline_df.iloc[9]['headline'],href=headline_df.iloc[9]['link'])))), html.Td(info_df.iloc[9]['date'])])
+    row20 = html.Tr([html.Td(info_df.iloc[9]['preview']), html.Td(" ")])
+
+    spacer = html.Tr([html.Td(" "), html.Td(" ")])
+
+    table_body = [html.Tbody([row1, row2, spacer, row3, row4, spacer, row5, row6, spacer, row7, row8, spacer, row9, row10, spacer, row11, row12, spacer, row13, row14, spacer, row15, row16, spacer, row17, row18, spacer, row19, row20])]
+
+    table3 = dbc.Table(table_header + table_body, borderless=True)
+    Table2 = html.Div(
+        [
+            dbc.Row(dbc.Col(html.Div(" "))),
+            dbc.Row(
+                [
+                    dbc.Col(html.Div(" "), width=2),
+                    dbc.Col(html.Div(table3), width=8),
+                    dbc.Col(html.Div(" "), width=2),
+                ]
+            ),
+        ]
+    )
+except:
+    card_content = [
+        dbc.CardHeader("Site Error"),
+        dbc.CardBody(
             [
-                dbc.Col(html.Div(" "), width=2),
-                dbc.Col(html.Div(table3), width=8),
-                dbc.Col(html.Div(" "), width=2),
+                html.H5("Site Error", className="card-title"),
+                html.P(
+                    "There are some issues loading Rappler.com, our source of rice related news",
+                    className="card-text",
+                ),
             ]
         ),
     ]
-)
+
+    cards = dbc.Row(
+        [dbc.Col(dbc.Card(card_content, color="dark", outline=True))]
+    )
+    Table2 = html.Div(
+        [
+            dbc.Row(dbc.Col(html.Div(" "))),
+            dbc.Row(
+                [
+                    dbc.Col(html.Div(" "), width=2),
+                    dbc.Col(html.Div(cards), width=8),
+                    dbc.Col(html.Div(" "), width=2),
+                ]
+            ),
+        ]
+    )
 #========================================================
 # Date Fig
 #========================================================
@@ -527,6 +564,7 @@ def toggle_modal(n1,n2,is_open, Status, Manufacturer, Brand, Area, Weight, Price
     datem = str(dates.month)
     dated = str(dates.day)
     Date = datey+datem+dated
+    username = request.authorization['username']
     if (n1 is None): #or n2 is None or n3 is None):
         raise PreventUpdate #To prevent automatic update of the page
     elif n1:
@@ -547,7 +585,7 @@ def toggle_modal(n1,n2,is_open, Status, Manufacturer, Brand, Area, Weight, Price
             print("Status: " + str(Status))
             print("Status Recieved : " + str(StatusRecieved))
             print("Status weight: " + str(StatusWeight))
-            tx_hash = contract.functions.enterRiceInfo(str(Manufacturer), str(Brand), str(Area), str(Status), str(StatusRecieved), int(StatusWeight), int(Date), int(datey), int(datem), int(dated), int(Weight), int(Price)).transact()
+            tx_hash = contract.functions.enterRiceInfo(str(username), str(Manufacturer), str(Brand), str(Area), str(Status), str(StatusRecieved), int(StatusWeight), int(Date), int(datey), int(datem), int(dated), int(Weight), int(Price)).transact()
             print("The Transaction hash is : ",web3.toHex(tx_hash))
             print("======================================================")
             return not is_open, '','','','','','','Complete','' #Multiple returns for multiple Outputs
@@ -681,12 +719,12 @@ def price_input(val, invalid):
     )
 def render_page_content(pathname):
     if pathname in ["/", "/page-1"]:
-        return Graph2
+        return Graph1
     elif pathname == "/page-2":
         return Table1
 
     elif pathname == "/page-3":
-        return Graph1
+        return Graph2
 
     elif pathname == "/page-4":
         return Table2
@@ -911,7 +949,6 @@ def update_area(n):
     return barfig
 
 #=======================================================================
-
 @app.callback(
     Output('live-update-table','figure'),
     [Input('interval-component','n_intervals')]
@@ -935,6 +972,7 @@ def update_tabble(n):
         day = contract.functions.getDay(int(i)).call()
         wght = contract.functions.getWeight(int(i)).call()
         pric = contract.functions.getPrice(int(i)).call()
+        user = contract.functions.getUser(int(i)).call()
         rewg = wght-stWe # This is for the remaining weight
         s_datetime = datetime.datetime.strptime(fuldate, '%Y%m%d')
         Rice = {
@@ -950,14 +988,17 @@ def update_tabble(n):
             'Day': [day],
             'Weight': [wght],
             'Price': [pric],
-            'RemainingWeight': [rewg]
+            'RemainingWeight': [rewg],
+            'User': [user]
             }
-        dfnew = pd.DataFrame(Rice, columns= ['Manufacturer', 'Brand', 'Area', 'Status', 'StatusRecieved', 'StatusWeight', 'Date', 'Year', 'Month', 'Day', 'Weight', 'Price', 'RemainingWeight'])
+        dfnew = pd.DataFrame(Rice, columns= ['Manufacturer', 'Brand', 'Area', 'Status', 'StatusRecieved', 'StatusWeight', 'Date', 'Year', 'Month', 'Day', 'Weight', 'Price', 'RemainingWeight', 'User'])
         dfall = dfall.append(dfnew, ignore_index=True)
+        
+
     try:
         tablefig = go.Figure(data=[go.Table(
             header=dict(
-                values=['<b>Date</b>','<b>Area</b>','<b>Manufacturer</b>','<b>Brand</b>','<b>Status</b>','<b>Damaged, Stolen, Complete</b>','<b>Weight(kg)</b>','<b>Weight of Damage</b>','<b>Usable/Sellable Rice(kg)</b>','<b>Price per kg</b>'],
+                values=['<b>Date</b>','<b>Area</b>','<b>Manufacturer</b>','<b>Brand</b>','<b>Status</b>','<b>Damaged, Stolen, Complete</b>','<b>Weight(kg)</b>','<b>Weight of Damage</b>','<b>Usable/Sellable Rice(kg)</b>','<b>Price per kg</b>','<b>Details</b>'],
                 line_color='darkslategray',
                 align=['center'],
                 font=dict(color='black', size=12)
@@ -973,7 +1014,8 @@ def update_tabble(n):
                     dfall.Weight,
                     dfall.StatusWeight,
                     dfall.RemainingWeight,
-                    dfall.Price
+                    dfall.Price,
+                    dfall.User
                     ],
                 line_color='darkslategray',
                 align = ['center'],
@@ -985,13 +1027,14 @@ def update_tabble(n):
     except:
             tablefig = go.Figure(data=[go.Table(
             header=dict(
-                values=['<b>Date</b>','<b>Area</b>','<b>Manufacturer</b>','<b>Brand</b>','<b>Status</b>','<b>Damaged, Stolen, Complete</b>','<b>Weight(kg)</b>','<b>Weight of Damage</b>','<b>Usable/Sellable Rice(kg)</b>','<b>Price per kg</b>'],
+                values=['<b>Date</b>','<b>Area</b>','<b>Manufacturer</b>','<b>Brand</b>','<b>Status</b>','<b>Damaged, Stolen, Complete</b>','<b>Weight(kg)</b>','<b>Weight of Damage</b>','<b>Usable/Sellable Rice(kg)</b>','<b>Price per kg</b>','<b>Details</b>'],
                 line_color='darkslategray',
                 align=['center'],
                 font=dict(color='black', size=12)
             ),
             cells=dict(
                 values=[
+                    None,
                     None,
                     None,
                     None,
