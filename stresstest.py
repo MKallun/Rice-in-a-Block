@@ -1,9 +1,7 @@
 import json
-import xlwt # to write excel spread sheet
 import datetime
 from datetime import date # to get date today
 from random import randint # for random integer value
-from xlwt import Workbook # create workboox
 from web3 import Web3
 
 ganache_url = "HTTP://127.0.0.1:7545"
@@ -124,12 +122,3 @@ for i in range(0, int(alpha)): #loop 10,000 times for stress test
     print("")
 
 print("random data entered, added",alpha,"in total")
-
-
-#to display all info
-#comment all to temporarily disable
-# ------------------------------------------- 
-#retID = input("Enter Entry ID to be retrived : ")
-#print(contract.functions.GetRiceInfo(int(retID)).call())
-#
-# ------------------------------------------- 
