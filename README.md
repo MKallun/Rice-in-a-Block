@@ -3,7 +3,6 @@ Due to rappler, our source of news for the new tab, updating their website today
 we are working on a substitute but we are sadly not sure if we will be able to find a news source that will fit all criteria we require
 
 thank you for understanding
-Mishaal Kallun   
 # =============================================
 
 
